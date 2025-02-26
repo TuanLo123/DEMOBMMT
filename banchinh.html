@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính toán số học - Bảo mật</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Chọn thuật toán</h2>
+    <select id="algorithm" onchange="toggleAlgorithm()">
+        <option value="modExp">Tính a^k mod b</option>
+        <option value="euclidExt">Euclid mở rộng</option>
+    </select>
+    
+    <div id="modExpSection">
+        <h2>Tính a^k mod b</h2>
+        <label>Nhập a: <input type="number" id="a" value="47"></label>
+        <label>Nhập b: <input type="number" id="b" value="1517"></label>
+        <label>Nhập k: <input type="number" id="k" value="211"></label>
+        <button onclick="calculateModExp()">Tính</button>
+        <table>
+            <thead>
+                <tr><th>i</th><th>k<sub>i</sub></th><th>A</th><th>mod b</th></tr>
+            </thead>
+            <tbody id="resultTable"></tbody>
+        </table>
+    </div>
+    
+    <div id="euclidExtSection" style="display:none;">
+        <h2>Thuật toán Euclid mở rộng</h2>
+        <label>Nhập a: <input type="number" id="ea" value="252"></label>
+        <label>Nhập b: <input type="number" id="eb" value="198"></label>
+        <button onclick="calculateEuclidExt()">Tính</button>
+        <table>
+            <thead>
+                <tr><th>q</th><th>r</th><th>x</th><th>x1</th><th>x2</th><th>y</th><th>y1</th><th>y2</th></tr>
+            </thead>
+            <tbody id="euclidTable"></tbody>
+        </table>
+        <p id="inverseResult"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
