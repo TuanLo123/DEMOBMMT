@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính toán số học</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module">
+        import { calculateModExp } from './akmod.js';
+        import { calculateEuclidExt } from './euclid.js';
+
+        window.runAkmod = function() {
+            let a = parseInt(document.getElementById("a").value);
+            let k = parseInt(document.getElementById("k").value);
+            let b = parseInt(document.getElementById("b").value);
+            
+            let steps = calculateModExp(a, k, b);
+            let resultTable = document.getElementById("resultTable");
+            resultTable.innerHTML = steps.map(s => 
+                `<tr><td>${s.i}</td><td>${s.bit}</td><td>${s.A}</td><td>${s.result}</td></tr>`
+            ).join('');
+        };
+
+        window.runEuclid = function() {
+            let a = parseInt(document.getElementById("ea").value);
+            let b = parseInt(document.getElementById("eb").value);
+            
+            let { d, x, y, steps } = calculateEuclidExt(a, b);
+            let resultText = d > 1 ? "Không có nghịch đảo modular" : `Nghịch đảo là: x = ${x}`;
+            document.getElementById("result").innerText = `d = ${d}, x = ${x}, y = ${y}. ${resultText}`;
+
+            let euclidTable = document.getElementById("euclidTable");
+            euclidTable.innerHTML = steps.map(s => 
+                `<tr><td>${s.q}</td><td>${s.r}</td><td>${s.x}</td><td>${s.x1}</td><td>${s.x2}</td>
+                <td>${s.y}</td><td>${s.y1}</td><td>${s.y2}</td></tr>`
+            ).join('');
+        };
+    </script>
+</head>
+<body>
+    <h2>Chọn thuật toán</h2>
+    <select id="algorithm" onchange="toggleAlgorithm()">
+        <option value="modExp">Tính a^k mod b</option>
+        <option value="euclidExt">Euclid mở rộng</option>
+    </select>
+
+    <div id="modExpSection">
+        <h2>Bảng tính a^k mod b</h2>
+        <label for="a">Nhập a: </label>
+        <input type="number" id="a" value="47">
+        <label for="b">Nhập b: </label>
+        <input type="number" id="b" value="1517">
+        <label for="k">Nhập k: </label>
+        <input type="number" id="k" value="211">
+        <button onclick="runAkmod()">Tính</button>
+        <br><br>
+        <table>
+            <thead><tr><th>i</th> <th>k<sub>i</sub></th> <th>A</th> <th>b</th></tr></thead>
+            <tbody id="resultTable"></tbody>
+        </table>
+    </div>
+
+    <div id="euclidExtSection" style="display:none;">
+        <h2>Bảng tính Euclid mở rộng</h2>
+        <label for="ea">Nhập a: </label>
+        <input type="number" id="ea" value="252">
+        <label for="eb">Nhập b: </label>
+        <input type="number" id="eb" value="198">
+        <button onclick="runEuclid()">Tính</button>
+        <br><br>
+        <table>
+            <thead><tr><th>q</th> <th>r</th> <th>x</th> <th>x1</th> <th>x2</th> <th>y</th> <th>y1</th> <th>y2</th></tr></thead>
+            <tbody id="euclidTable"></tbody>
+        </table>
+        <h3 id="result"></h3>
+    </div>
+
+    <script>
+        function toggleAlgorithm() {
+            let selected = document.getElementById("algorithm").value;
+            document.getElementById("modExpSection").style.display = selected === "modExp" ? "block" : "none";
+            document.getElementById("euclidExtSection").style.display = selected === "euclidExt" ? "block" : "none";
+        }
+    </script>
+</body>
+</html>
